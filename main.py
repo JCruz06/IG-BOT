@@ -1,5 +1,4 @@
-from fastapi import FastAPI, Request, Query, HTTPException, JSONResponse
-from pydantic import BaseModel
+from fastapi import FastAPI, Request, Query, HTTPException
 from dotenv import load_dotenv
 import os
 import logging
