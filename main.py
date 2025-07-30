@@ -58,7 +58,7 @@ async def webhook(request: Request):
 
 
 def send_message(recipient_id: str, text: str):
-    url = "https://graph.facebook.com/v19.0/me/messages"
+    url = "https://graph.instagram.com/v21.0/me/messages"
     payload = {
         "recipient": {"id": recipient_id},
         "message": {"text": text},
