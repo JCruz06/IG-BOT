@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Query, HTTPException
+from fastapi import FastAPI, Request, Query, HTTPException, JSONResponse
 from pydantic import BaseModel
 from dotenv import load_dotenv
 import os
@@ -17,6 +17,11 @@ logger = logging.getLogger(__name__)
 # FastAPI app
 app = FastAPI()
 
+@app.get("/")
+async def home():
+    return {
+        "status": "Running server" 
+    }
 
 # Webhook verification route (GET)
 @app.get("/webhook")
