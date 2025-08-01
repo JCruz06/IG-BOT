@@ -1,8 +1,15 @@
-venv
+# Virtual environment
+venv/
 .env
+
+# Python cache
+__pycache__/
+
+# Ignore specific files
 session.json
-__pycache__
-basic.py
-test.py
-/ipynb
-.json
+
+# Ignore Jupyter Notebook folder named ".ipynb"
+.ipynb/
+
+# Ignore all JSON files
+*.json
