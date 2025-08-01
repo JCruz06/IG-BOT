@@ -5,7 +5,7 @@ from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
-with open('../cwdchat_config.json', 'r') as file:
+with open('cwdchat_config.json', 'r') as file:
         config = json.load(file)
 
 app_id = config["app_id"]
