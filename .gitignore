@@ -2,14 +2,13 @@
 venv/
 .env
 
-# Python cache
 __pycache__/
 
-# Ignore specific files
 session.json
+cwdchat_config.json
 
-# Ignore Jupyter Notebook folder named ".ipynb"
-.ipynb/
 
-# Ignore all JSON files
+test_folder/
+
 *.json
+*.ipynb
