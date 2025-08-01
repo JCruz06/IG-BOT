@@ -4,3 +4,5 @@ session.json
 __pycache__
 basic.py
 test.py
+/ipynb
+.json
