@@ -5,14 +5,6 @@ from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
-with open('cwdchat_config.json', 'r') as file:
-        config = json.load(file)
-
-app_id = config["app_id"]
-app_secret = config["app_secret"]
-redirect_uri = "https://ig-bot-junf.onrender.com/your_insta_token"
-
-
 @app.route("/")
 def test():
     return "<p>TESTING SERVER IS RUNNING</p>"
@@ -42,35 +34,6 @@ def webhook():
         if hub_challenge:
             return hub_challenge
         return "<p>This is GET Request, Hello Webhook!</p>"
-    
-@app.route("/login")
-def login():
-    url = "https://www.instagram.com/oauth/authorize?"
-    url = url + f"client_id={int(app_id)}"
-    url = url + "&" + f"redirect_uri={redirect_uri}"
-    url = url + "&" + f"response_type=code"
-    url = url + "&" + f"scope={('instagram_business_basic,instagram_business_content_publish,instagram_business_manage_messages,instagram_business_manage_comments').replace(',','%2C')}"
-    return redirect(url)
-
-@app.route("/your_insta_token")
-def your_insta_token():
-    authorization_code = request.args.get("code") + "#_"
-    
-    url = f"https://api.instagram.com/oauth/access_token"
-    payload = {
-        "client_id": int(app_id),
-        "client_secret": app_secret,
-        "grant_type": "authorization_code",
-        "redirect_uri": redirect_uri,
-        "code": authorization_code
-        
-    }
-    response = requests.post(url, data=payload)
-    data = response.json()
-    # print(json.dumps(data, indent=4))
-    user_access_token = data["access_token"]
-    return f"Your user token is: {user_access_token[0:5]}..."
-
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
