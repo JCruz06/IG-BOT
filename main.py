@@ -5,10 +5,10 @@ from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = os.getenv("GRAPH_API_ACCESS_TOKEN")
+ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")
 PAGE_ID = os.getenv("IG_USER_ID")
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "123456789")
-API_URL = f"https://graph.facebook.com/v17.0/{PAGE_ID}/messages"
+API_URL = f"https://graph.facebook.com/v19.0/{PAGE_ID}/messages"
 
 @app.route("/")
 def test():
