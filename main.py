@@ -5,7 +5,7 @@ from flask import Flask, request
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = os.getenv("GRAPH_API_ACCESS_TOKEN")          # PAGE Access Token
+ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")          # PAGE Access Token
 IG_USER_ID = os.getenv("IG_USER_ID")              # Instagram Business Account ID
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "123456")  # Webhook Verify Token
 
