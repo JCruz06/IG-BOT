@@ -8,7 +8,7 @@ app = Flask(__name__)
 # Load environment variables
 ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")  # Facebook Page Access Token
 IG_BUSINESS_ID = os.getenv("IG_USER_ID")       # Instagram Business Account ID (optional)
-VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "123456")  # Webhook verification token
+VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "123456789")  # Webhook verification token
 
 # Correct Facebook Graph API endpoint for sending messages
 FB_GRAPH_URL = "https://graph.facebook.com/v19.0/me/messages"
