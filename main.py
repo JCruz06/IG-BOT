@@ -5,7 +5,7 @@ from flask import Flask, request, redirect
 
 app = Flask(__name__)
 
-ACCESS_TOKEN = os.getenv("IG_APP_ACCESS_TOKEN")
+ACCESS_TOKEN = os.getenv("USER_ACCESS_TOKEN")
 PAGE_ID = os.getenv("IG_USER_ID")
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "123456789")
 API_URL = f"https://graph.facebook.com/v17.0/{PAGE_ID}/messages"
