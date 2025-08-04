@@ -43,6 +43,10 @@ def webhook():
             for entry in data.get("entry", []):
                 for event in entry.get("messaging", []):
                     sender_id = event["sender"]["id"]
+                    
+                    if event.get("message", {}).get("is_echo"):
+                        print("🔁 Ignored echo message.")
+                        continue
 
                     if "message" in event:
                         user_message = event["message"].get("text", "")
