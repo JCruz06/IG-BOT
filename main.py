@@ -47,13 +47,7 @@ def webhook():
                         user_message = event["message"].get("text", "")
                         print(f"📩 Message from {sender_id}: {user_message}")
 
-                        # Auto-reply logic
-                        if user_message.lower() == "hello":
-                            reply_text = "Hi there! 👋 How can I help you today?"
-                        else:
-                            reply_text = "Thanks for messaging us on Instagram!"
-
-                        send_via_dx_api(chat_id=1, message_text=reply_text, sender_id=sender_id)
+                        send_via_dx_api(chat_id=1, message_text=user_message, sender_id=sender_id)
 
         return "OK", 200
 
