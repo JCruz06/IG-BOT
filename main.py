@@ -1,7 +1,7 @@
 import os
 import json
 import requests
-from flask import Flask, request
+from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
@@ -94,9 +94,11 @@ def send_via_dx_api(chat_id, message_text, sender_id):
     except Exception as e:
         print(f"❌ Exception during DX API call: {e}")
         
-@app.route("/dx-result", methods=["GET"])  
-def dxmind_result(request):
-    print (f"This is your AI-response: {request}")
+@app.route("/dx-result", methods=["POST"])
+def dxmind_result():
+    data = request.get_json()
+    print(f"This is your AI-response: {data}")
+    return jsonify({"status": "received"}), 200
     
 
 if __name__ == "__main__":
