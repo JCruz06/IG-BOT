@@ -9,6 +9,7 @@ app = Flask(__name__)
 ACCESS_TOKEN = os.getenv("PAGE_ACCESS_TOKEN")  # Facebook Page Access Token
 IG_BUSINESS_ID = os.getenv("IG_USER_ID")       # Instagram Business Account ID (optional)
 VERIFY_TOKEN = os.getenv("VERIFY_TOKEN", "123456789")  # Webhook verification token
+DX_API_SEND_MESSAGE = os.getenv("DX_API_SEND_MESSAGE")
 
 # Correct Facebook Graph API endpoint for sending messages
 FB_GRAPH_URL = "https://graph.facebook.com/v19.0/me/messages"
@@ -52,7 +53,7 @@ def webhook():
                         else:
                             reply_text = "Thanks for messaging us on Instagram!"
 
-                        send_text_message(sender_id, reply_text)
+                        send_via_dx_api(chat_id=1, message_text=reply_text, sender_id=sender_id)
 
         return "OK", 200
 
@@ -74,6 +75,29 @@ def send_text_message(recipient_id, message_text):
 
     if response.status_code != 200:
         print("❌ Failed to send message. Please check recipient ID and access token.")
+        
+def send_via_dx_api(chat_id, message_text, sender_id):
+    if not DX_API_SEND_MESSAGE:
+        print("❌ DX_API_SEND_MESSAGE URL is not set.")
+        return
+
+    payload = {
+        "chat_id": chat_id,
+        "message": message_text,
+        "sender_id": sender_id
+    }
+
+    try:
+        response = requests.post(DX_API_SEND_MESSAGE, json=payload)
+        print("📤 DX API Response:")
+        print(response.status_code)
+        print(response.text)
+
+        if response.status_code != 200:
+            print("❌ Failed to send message via DX API.")
+    except Exception as e:
+        print(f"❌ Exception during DX API call: {e}")
+
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
