@@ -78,7 +78,8 @@ def send_via_dx_api(chat_id, message_text, sender_id):
     payload = {
         "chat_id": chat_id,
         "user_message": message_text,
-        "sender_id": sender_id,
+        "file_ids": [],
+        "file_urls": [],
         "callback_type": "instagram"
     }
 
