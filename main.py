@@ -92,7 +92,10 @@ def send_via_dx_api(chat_id, message_text, sender_id):
             print("❌ Failed to send message via DX API.")
     except Exception as e:
         print(f"❌ Exception during DX API call: {e}")
-
+        
+@app.route("/dx-result", methods=["GET"])  
+def dxmind_result(request):
+    print (f"This is your AI-response: {request}")
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
