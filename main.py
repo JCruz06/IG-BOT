@@ -77,7 +77,7 @@ def send_via_dx_api(chat_id, message_text, sender_id):
 
     payload = {
         "chat_id": chat_id,
-        "message": message_text,
+        "user_message": message_text,
         "sender_id": sender_id,
         "callback_type": "instagram"
     }
@@ -96,6 +96,7 @@ def send_via_dx_api(chat_id, message_text, sender_id):
 @app.route("/dx-result", methods=["GET"])  
 def dxmind_result(request):
     print (f"This is your AI-response: {request}")
+    
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
