@@ -13,6 +13,7 @@ DX_API_SEND_MESSAGE = os.getenv("DX_API_SEND_MESSAGE")
 
 # Correct Facebook Graph API endpoint for sending messages
 FB_GRAPH_URL = "https://graph.facebook.com/v19.0/me/messages"
+sender_map = {}
 
 @app.route("/")
 def home():
@@ -46,8 +47,11 @@ def webhook():
                     if "message" in event:
                         user_message = event["message"].get("text", "")
                         print(f"📩 Message from {sender_id}: {user_message}")
+                        
+                        chat_id = sender_id
+                        sender_map[chat_id] = sender_id
 
-                        send_via_dx_api(chat_id=1, message_text=user_message, sender_id=sender_id)
+                        send_via_dx_api(chat_id=chat_id, message_text=user_message)
 
         return "OK", 200
 
@@ -70,17 +74,17 @@ def send_text_message(recipient_id, message_text):
     if response.status_code != 200:
         print("❌ Failed to send message. Please check recipient ID and access token.")
         
-def send_via_dx_api(chat_id, message_text, sender_id):
+def send_via_dx_api(chat_id, message_text):
     if not DX_API_SEND_MESSAGE:
         print("❌ DX_API_SEND_MESSAGE URL is not set.")
         return
-
+    
     payload = {
         "chat_id": chat_id,
         "user_message": message_text,
         "file_ids": [],
         "file_urls": [],
-        "callback_type": "instagram"
+        "callback_type": "instagram",
     }
 
     try:
@@ -97,9 +101,18 @@ def send_via_dx_api(chat_id, message_text, sender_id):
 @app.route("/dx-result", methods=["POST"])
 def dxmind_result():
     data = request.get_json()
-    print(f"This is your AI-response: {data}")
-    return jsonify({"status": "received"}), 200
+    chat_id = data.get("chat_id")
+    ai_response = data.get("ai_response")
+    sender_id = sender_map.get(chat_id)
     
+    print(f"📥 DX Result Received: {data}")
+    
+    if ai_response and sender_id:
+        send_text_message(sender_id, ai_response)
+        return jsonify({"status": "message sent"}), 200
+    else:
+        print("❌ Missing sender_id or ai_response")
+        return jsonify({"error": "Missing sender_id or ai_response"}), 400
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 5000))
